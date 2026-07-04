@@ -52,6 +52,7 @@ function Hero() {
     setLoading(false);
 
     //navigate to project route
+    router.push("/project/" + projectId);
   };
   return (
     <div className="p-10 md:px-24 lg:px-48 xl:px-60 mt-8">

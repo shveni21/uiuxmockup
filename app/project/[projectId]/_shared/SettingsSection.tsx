@@ -3,13 +3,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { THEME_NAME_LIST, THEMES } from "@/data/Themes";
+import { ProjectType } from "@/type/types";
 import { Camera, Share, Sparkles } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function SettingsSection() {
+type Props = {
+  projectDetail: ProjectType | undefined;
+};
+function SettingsSection({ projectDetail }: Props) {
   const [selectedTheme, setSelectedTheme] = useState("AURORA_INK");
+  //   const [projectName, setProjectName] = useState(projectDetail?.projectName);
+  //   const [userNewScreenInput, setUserNewScreenInput] = useState<string>();
   const [projectName, setProjectName] = useState("");
-  const [userNewScreenInput, setUserNewScreenInput] = useState<string>();
+  const [userNewScreenInput, setUserNewScreenInput] = useState("");
+
+  //   useEffect(() => {
+  //     projectDetail && setProjectName(projectDetail?.projectName);
+  //   }, [projectDetail]);
+  useEffect(() => {
+    if (projectDetail) {
+      setProjectName(projectDetail.projectName ?? "");
+    }
+  }, [projectDetail]);
 
   return (
     <div className="w-[300px] h-[90vh] p-5 border-r">
@@ -19,6 +34,7 @@ function SettingsSection() {
         <h2 className="text-sm mb-1">Project Name</h2>
         <Input
           placeholder="Project Name"
+          value={projectName}
           onChange={(event) => setProjectName(event.target.value)}
         />
       </div>
@@ -40,6 +56,7 @@ function SettingsSection() {
           <div>
             {THEME_NAME_LIST.map((theme, index) => (
               <div
+                key={theme}
                 className={`p-3 border rounded-xl mb-2 
                     ${theme === selectedTheme && "border-primary bg-primary/20"}`}
                 onClick={() => setSelectedTheme(theme)}
